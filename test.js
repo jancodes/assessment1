@@ -1,3 +1,5 @@
+'use strict';
+
 var app = require('./app');
 var Promise = require('bluebird');
 var models = require('./models'),
@@ -42,7 +44,7 @@ describe('fake library app', function () {
     return db.sync({force: true});
   });
 
-  xit('serves up static files (from the static folder in the public folder) on /files route', function (done) {
+  it('serves up static files (from the static folder in the public folder) on /files route', function (done) {
     agent
     .get('/files/index.html')
     .expect(200)
@@ -56,7 +58,7 @@ describe('fake library app', function () {
     });
   });
 
-  xit('handles internal server errors', function (done) {
+  it('handles internal server errors', function (done) {
     // in an actual application, this route wouldn't exist
     // it's here just to test how you trigger and handle errors in an express app
     agent
@@ -64,7 +66,7 @@ describe('fake library app', function () {
     .expect(500, done);
   });
 
-  xit('handles custom errors', function (done) {
+  it('handles custom errors', function (done) {
     // in an actual application, this route wouldn't exist
     // it's here just to test how you trigger and handle errors in an express app
     agent
@@ -116,7 +118,7 @@ describe('fake library app', function () {
         });
       });
 
-      xit('GET all', function (done) {
+      it('GET all', function (done) {
         agent
         .get('/api/books')
         .expect(200)
@@ -128,7 +130,7 @@ describe('fake library app', function () {
         });
       });
 
-      xit('POST one', function (done) {
+      it('POST one', function (done) {
         agent
         .post('/api/books')
         .send({
@@ -149,8 +151,8 @@ describe('fake library app', function () {
           .catch(done);
         });
       });
-      
-      xit('GET one', function (done) {
+
+      it('GET one', function (done) {
         agent
         .get('/api/books/' + book.id)
         .expect(200)
@@ -161,21 +163,21 @@ describe('fake library app', function () {
         });
       });
 
-      xit('GET one that doesn\'t exist', function (done) {
+      it('GET one that doesn\'t exist', function (done) {
         agent
         .get('/api/books/12345')
         .expect(404)
         .end(done);
       });
 
-      xit('GET one using invalid ID', function (done) {
+      it('GET one using invalid ID', function (done) {
         agent
         .get('/api/books/clearlynotanid')
         .expect(500)
         .end(done);
       });
-      
-      xit('PUT one', function (done) {
+
+      it('PUT one', function (done) {
         agent
         .put('/api/books/' + book.id)
         .send({
@@ -195,7 +197,7 @@ describe('fake library app', function () {
         });
       });
 
-      xit('PUT one that doesn\'t exist', function (done) {
+      it('PUT one that doesn\'t exist', function (done) {
         agent
         .put('/api/books/54321')
         .send({title: 'Attempt To Update Book Title'})
@@ -203,7 +205,7 @@ describe('fake library app', function () {
         .end(done);
       });
 
-      xit('PUT one using invalid ID', function (done) {
+      it('PUT one using invalid ID', function (done) {
         agent
         .put('/api/books/clearlynotanid')
         .send({title: 'Attempt To Update Book Title'})
@@ -211,7 +213,7 @@ describe('fake library app', function () {
         .end(done);
       });
 
-      xit('DELETE one', function (done) {
+      it('DELETE one', function (done) {
         agent
         .delete('/api/books/' + book.id)
         .expect(204)
@@ -226,21 +228,21 @@ describe('fake library app', function () {
         });
       });
 
-      xit('DELETE one that doesn\'t exist', function (done) {
+      it('DELETE one that doesn\'t exist', function (done) {
         agent
         .delete('/api/books/13579')
         .expect(404)
         .end(done);
       });
 
-      xit('DELETE one using invalid ID', function (done) {
+      it('DELETE one using invalid ID', function (done) {
         agent
         .delete('/api/books/clearlynotanid')
         .expect(500)
         .end(done);
       });
 
-      xit('GET with query string filter', function (done) {
+      it('GET with query string filter', function (done) {
         agent
         // remember that in query strings %20 means a single whitespace character
         .get('/api/books?title=Best%20Book%20Ever')
@@ -282,7 +284,7 @@ describe('fake library app', function () {
           });
         });
 
-        xit('GET all', function (done) {
+        it('GET all', function (done) {
           agent
           .get('/api/books/' + chapterBook.id + '/chapters')
           .expect(200)
@@ -294,7 +296,7 @@ describe('fake library app', function () {
           });
         });
 
-        xit('POST one', function (done) {
+        it('POST one', function (done) {
           // notice the addChapter method we've provided for the Book model
           // it is helpful here!
           agent
@@ -328,8 +330,8 @@ describe('fake library app', function () {
             .catch(done);
           });
         });
-        
-        xit('GET one', function (done) {
+
+        it('GET one', function (done) {
           var chapId = addedChapter.id;
           agent
           .get('/api/books/' + chapterBook.id + '/chapters/' + chapId)
@@ -341,21 +343,21 @@ describe('fake library app', function () {
           });
         });
 
-        xit('GET one that doesn\'t exist', function (done) {
+        it('GET one that doesn\'t exist', function (done) {
           agent
           .get('/api/books/' + chapterBook.id + '/chapters/24680')
           .expect(404)
           .end(done);
         });
 
-        xit('GET one using invalid ID', function (done) {
+        it('GET one using invalid ID', function (done) {
           agent
           .get('/api/books/clearlynotanid')
           .expect(500)
           .end(done);
         });
-        
-        xit('PUT one', function (done) {
+
+        it('PUT one', function (done) {
           var chapId = addedChapter.id;
           agent
           .put('/api/books/' + chapterBook.id + '/chapters/' + chapId)
@@ -376,7 +378,7 @@ describe('fake library app', function () {
           });
         });
 
-        xit('PUT one that doesn\'t exist', function (done) {
+        it('PUT one that doesn\'t exist', function (done) {
           agent
           .put('/api/books/' + chapterBook.id + '/chapters/98765')
           .send({
@@ -386,7 +388,7 @@ describe('fake library app', function () {
           .end(done);
         });
 
-        xit('PUT one using invalid ID', function (done) {
+        it('PUT one using invalid ID', function (done) {
           agent
           .put('/api/books/' + chapterBook.id + '/chapters/clearlynotanid')
           .send({
@@ -396,7 +398,7 @@ describe('fake library app', function () {
           .end(done);
         });
 
-        xit('DELETE one', function (done) {
+        it('DELETE one', function (done) {
           // notice the removeChapter method we've provided for the Book model
           // it is helpful here!
           var chapId = addedChapter.id;
@@ -423,14 +425,14 @@ describe('fake library app', function () {
           });
         });
 
-        xit('DELETE one that doesn\'t exist', function (done) {
+        it('DELETE one that doesn\'t exist', function (done) {
           agent
           .delete('/api/books/' + chapterBook.id + '/chapters/12345')
           .expect(404)
           .end(done);
         });
 
-        xit('DELETE one using invalid ID', function (done) {
+        it('DELETE one using invalid ID', function (done) {
           agent
           .delete('/api/books/' + chapterBook.id + '/chapters/clearlynotanid')
           .expect(500)
@@ -445,7 +447,7 @@ describe('fake library app', function () {
       // remember express sessions?
       // https://github.com/expressjs/session
 
-      xit('counts a client\'s visits to it', function (done) {
+      it('counts a client\'s visits to it', function (done) {
         // should originally send back zero
         // but should increment, thus returning one the next time around
         var clientA = agent;
@@ -467,7 +469,7 @@ describe('fake library app', function () {
       });
 
 
-      xit('distinguises between clients', function (done) {
+      it('distinguises between clients', function (done) {
         // should be zero again for this client!
         var clientB = supertest.agent(app);
         clientB
